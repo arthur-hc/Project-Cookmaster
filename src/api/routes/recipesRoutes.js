@@ -10,4 +10,6 @@ router.get('/', recipesController.getAllRecipes);
 
 router.get('/:id', recipesController.getRecipeById);
 
+router.put('/:id', validationJWT, recipesController.editRecipeById);
+
 module.exports = router;

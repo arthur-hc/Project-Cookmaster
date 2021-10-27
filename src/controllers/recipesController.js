@@ -2,6 +2,7 @@ const recipesService = require('../services/recipesService');
 const { 
   badRequest,
   created,
+  ok,
 } = require('../helpers/httpStatus');
 
 const create = async (req, res) => {
@@ -17,6 +18,12 @@ const create = async (req, res) => {
   return res.status(created).send(response);
 };
 
+const getAllRecipes = async (_req, res) => {
+  const response = await recipesService.getAllRecipes();
+  return res.status(ok).json(response);
+};
+
 module.exports = {
   create,
+  getAllRecipes,
 };

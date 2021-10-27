@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.post('/', validationJWT, recipesController.create);
 
+router.get('/', recipesController.getAllRecipes);
+
 module.exports = router;

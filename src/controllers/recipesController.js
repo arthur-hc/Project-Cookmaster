@@ -5,6 +5,7 @@ const {
   ok,
   notFound,
   unauthorized,
+  noContent,
 } = require('../helpers/httpStatus');
 
 const create = async (req, res) => {
@@ -51,9 +52,23 @@ const editRecipeById = async (req, res) => {
   return res.status(ok).json(response);
 };
 
+const deleteRecipeById = async (req, res) => {
+  const { userData } = req;
+  const recipeId = req.params.id;
+  const response = await recipesService.deleteRecipeById(userData, recipeId);
+
+  const { err } = response;
+
+  if (err) {
+    return res.status(unauthorized).json(err);
+  }
+  return res.status(noContent).end();
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getRecipeById,
   editRecipeById,
+  deleteRecipeById,
 };

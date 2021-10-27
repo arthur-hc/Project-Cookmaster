@@ -4,6 +4,7 @@ const {
   invalidEntries,
   recipeNotFound,
   onlyCreatorEdit,
+  onlyCreatorDelete,
 } = require('../helpers/errors');
 
 const create = async (name, ingredients, preparation, _id) => {
@@ -46,9 +47,26 @@ const editRecipeById = async (userData, recipeId, recipeData) => {
   return { ...recipeToEdit, ...recipeData };
 };
 
+const deleteRecipeById = async (userData, recipeId) => {
+  const { role, _id } = userData;
+  const userId = _id;
+
+  const recipeToEdit = await recipesModel.getRecipeById(recipeId);
+  const madeBy = recipeToEdit.userId;
+  
+  if (!isSameId(userId, madeBy) && !isAdmin(role)) {
+    return { err: { message: onlyCreatorDelete } };
+  }
+
+  await recipesModel.deleteRecipeById(recipeId);
+
+  return {};
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getRecipeById,
   editRecipeById,
+  deleteRecipeById,
 };

@@ -13,4 +13,6 @@ app.get('/', (request, response) => {
 
 app.use('/users', require('./routes/signinRoutes'));
 
+app.use('/login', require('./routes/loginRoutes'));
+
 module.exports = app;

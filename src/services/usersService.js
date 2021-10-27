@@ -1,10 +1,11 @@
 const usersModel = require('../model/usersModel');
-const { containsAllParams, isValidEmail } = require('../validations/index');
+const { containsAllParams, isValidEmail, isAdmin } = require('../validations/index');
 const { 
   invalidEntries,
   emailInUse,
   emptyLoginFields,
   incorrectUserOrPass,
+  onlyAdminsRegister,
 } = require('../helpers/errors');
 const generateJWT = require('../api/auth/generateJWT');
 
@@ -42,7 +43,18 @@ const login = async (email, password) => {
   return token;
 };
 
+const registerAdmin = async (name, email, password, role) => {
+  if (!isAdmin(role)) {
+    return { err: { message: onlyAdminsRegister } };
+  }
+
+  const response = await usersModel.signin({ name, email, password, role });
+
+  return response;
+};
+
 module.exports = {
   signin,
   login,
+  registerAdmin,
 };

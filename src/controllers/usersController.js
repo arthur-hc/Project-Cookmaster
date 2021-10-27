@@ -6,6 +6,7 @@ const {
   created,
   unauthorized,
   ok,
+  forbidden,
 } = require('../helpers/httpStatus');
 
 const signin = async (req, res) => {
@@ -40,7 +41,23 @@ const login = async (req, res) => {
   return res.status(ok).json(response);
 };
 
+const registerAdmin = async (req, res) => {
+  const { name, email, password } = req.body;
+  const { role } = req.userData;
+
+  const response = await usersService.registerAdmin(name, email, password, role);
+
+  const { err } = response;
+
+  if (err) {
+    return res.status(forbidden).json(err);
+  }
+
+  return res.status(created).json(response);
+};
+
 module.exports = {
   signin,
   login,
+  registerAdmin,
 };

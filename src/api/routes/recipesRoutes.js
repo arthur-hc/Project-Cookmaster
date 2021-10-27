@@ -8,4 +8,6 @@ router.post('/', validationJWT, recipesController.create);
 
 router.get('/', recipesController.getAllRecipes);
 
+router.get('/:id', recipesController.getRecipeById);
+
 module.exports = router;

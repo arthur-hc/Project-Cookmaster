@@ -3,6 +3,7 @@ const {
   badRequest,
   created,
   ok,
+  notFound,
 } = require('../helpers/httpStatus');
 
 const create = async (req, res) => {
@@ -23,7 +24,20 @@ const getAllRecipes = async (_req, res) => {
   return res.status(ok).json(response);
 };
 
+const getRecipeById = async (req, res) => {
+  const { id } = req.params;
+  const response = await recipesService.getRecipeById(id);
+
+  const { err } = response;
+
+  if (err) {
+    return res.status(notFound).json(err);
+  }
+  return res.status(ok).json(response);
+};
+
 module.exports = {
   create,
   getAllRecipes,
+  getRecipeById,
 };

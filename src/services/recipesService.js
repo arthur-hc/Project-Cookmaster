@@ -2,6 +2,7 @@ const recipesModel = require('../model/recipesModel');
 const { containsAllParams } = require('../validations/index');
 const {
   invalidEntries,
+  recipeNotFound,
 } = require('../helpers/errors');
 
 const create = async (name, ingredients, preparation, _id) => {
@@ -19,7 +20,17 @@ const getAllRecipes = async () => {
   return response;
 };
 
+const getRecipeById = async (id) => {
+  const response = await recipesModel.getRecipeById(id);
+
+  if (!response) {
+    return { err: { message: recipeNotFound } };
+  }
+  return response;
+};
+
 module.exports = {
   create,
   getAllRecipes,
+  getRecipeById,
 };

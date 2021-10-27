@@ -15,4 +15,6 @@ app.use('/users', require('./routes/signinRoutes'));
 
 app.use('/login', require('./routes/loginRoutes'));
 
+app.use('/recipes', require('./routes/recipesRoutes'));
+
 module.exports = app;

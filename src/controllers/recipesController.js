@@ -65,10 +65,25 @@ const deleteRecipeById = async (req, res) => {
   return res.status(noContent).end();
 };
 
+const addImageById = async (req, res) => {
+  const { userData } = req;
+  const recipeId = req.params.id;
+
+  const response = await recipesService.editRecipeById(userData, recipeId, { image: req.filePath });
+
+  const { err } = response;
+  
+  if (err) {
+    return res.status(unauthorized).json(err);
+  }
+  return res.status(ok).json(response);
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getRecipeById,
   editRecipeById,
   deleteRecipeById,
+  addImageById,
 };

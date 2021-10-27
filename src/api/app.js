@@ -17,4 +17,6 @@ app.use('/login', require('./routes/loginRoutes'));
 
 app.use('/recipes', require('./routes/recipesRoutes'));
 
+app.use('/images', express.static(`${__dirname}/../uploads`));
+
 module.exports = app;

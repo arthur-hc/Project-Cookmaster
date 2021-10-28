@@ -22,40 +22,41 @@ const usersDb = [
 let response = {};
 let recipeId;
 
-describe('GET /', () => {
-  
-  describe('Testa página para o avaliador', () => {
+const DBServer = new MongoMemoryServer();
 
-    before(async () => {
-      response = await chai.request(server)
-          .get('/');
-    });
+before(async () => {
+  const URLMock = await DBServer.getUri();
+    const connectionMock = await MongoClient.connect(URLMock,
+        { useNewUrlParser: true, useUnifiedTopology: true }
+    );
 
-    it('retorna um objeto', () => {
-      expect(response.body).to.be.an('object');
-    });
-  });
+  sinon.stub(MongoClient, 'connect')
+      .resolves(connectionMock);
+
+  await connectionMock.db('Cookmaster').collection('users').insertMany(usersDb);
 });
 
+after(async () => {
+  MongoClient.connect.restore();
+  // await DBServer.stop();
+});
+
+// describe('GET /', () => {
+  
+//   describe('Testa página para o avaliador', () => {
+
+//     before(async () => {
+//       response = await chai.request(server)
+//           .get('/');
+//     });
+
+//     it('retorna um objeto', () => {
+//       expect(response.body).to.be.an('object');
+//     });
+//   });
+// });
+
 describe('POST /users', () => {
-  const DBServer = new MongoMemoryServer();
-
-  before(async () => {
-    const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-          { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-    sinon.stub(MongoClient, 'connect')
-        .resolves(connectionMock);
-
-    await connectionMock.db('Cookmaster').collection('users').insertMany(usersDb);
-  });
-
-  after(async () => {
-    MongoClient.connect.restore();
-    // await DBServer.stop();
-  });
 
   describe('quando é criado com sucesso', () => {
     before(async () => {

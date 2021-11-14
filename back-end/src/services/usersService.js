@@ -33,7 +33,7 @@ const login = async (email, password) => {
 
   const userData = await usersModel.findUserByEmail(email);
   
-  if (!userData || userData.password !== password) {
+  if (!userData || userData.password.toString() !== password) {
     return { err: { message: incorrectUserOrPass } };
   }
 

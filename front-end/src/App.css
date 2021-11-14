@@ -1,0 +1,16 @@
+.bg-darkred {
+  background-color: rgb(131, 2, 2);
+}
+
+.height-300 {
+  height: 300px;
+}
+
+.height-400 {
+  height: 400px;
+}
+
+#uncontrolled-tab-example-tab-register, #uncontrolled-tab-example-tab-login  {
+  color: #368755;
+  font-weight: 500;
+}

@@ -38,6 +38,13 @@ const getRecipeById = async (req, res) => {
   return res.status(ok).json(response);
 };
 
+const getRecipesByUserId = async (req, res) => {
+  const { _id } = req.userData;
+  const userId = _id;
+  const response = await recipesService.getRecipesByUserId(userId);
+  return res.status(ok).json(response);
+};
+
 const editRecipeById = async (req, res) => {
   const { userData } = req;
   const recipeId = req.params.id;
@@ -86,4 +93,5 @@ module.exports = {
   editRecipeById,
   deleteRecipeById,
   addImageById,
+  getRecipesByUserId,
 };

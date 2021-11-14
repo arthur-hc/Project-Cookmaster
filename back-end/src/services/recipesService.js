@@ -31,6 +31,11 @@ const getRecipeById = async (id) => {
   return response;
 };
 
+const getRecipesByUserId = async (id) => {
+  const response = await recipesModel.getRecipesByUserId(id);
+  return response;
+};
+
 const editRecipeById = async (userData, recipeId, recipeData) => {
   const { role, _id } = userData;
   const userId = _id;
@@ -69,4 +74,5 @@ module.exports = {
   getRecipeById,
   editRecipeById,
   deleteRecipeById,
+  getRecipesByUserId,
 };

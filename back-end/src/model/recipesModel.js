@@ -23,6 +23,16 @@ const getRecipeById = async (id) => {
   }
 };
 
+const getRecipesByUserId = async (id) => {
+  try {
+    const db = await mongoConnection.getConnection();
+    const response = await db.collection('recipes').find({ userId: ObjectId(id) }).toArray();
+    return response;
+  } catch (_err) {
+    return null;
+  }
+};
+
 const editRecipeById = async (id, recipeData) => {
   try {
     const db = await mongoConnection.getConnection();
@@ -50,4 +60,5 @@ module.exports = {
   getRecipeById,
   editRecipeById,
   deleteRecipeById,
+  getRecipesByUserId,
 };

@@ -9,6 +9,8 @@ router.post('/', validationJWT, recipesController.create);
 
 router.get('/', recipesController.getAllRecipes);
 
+router.get('/byuser', validationJWT, recipesController.getRecipesByUserId);
+
 router.get('/:id', recipesController.getRecipeById);
 
 router.put('/:id', validationJWT, recipesController.editRecipeById);
